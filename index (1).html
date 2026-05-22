@@ -1,0 +1,646 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Manshi Bijalwan — Engineer · Consultant · Builder</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link href="https://fonts.googleapis.com/css2?family=Cormorant+Garamond:ital,wght@0,300;0,400;0,600;1,300;1,400&family=DM+Sans:wght@300;400;500&display=swap" rel="stylesheet">
+<style>
+  :root {
+    --ink: #111118;
+    --muted: #6b6b7a;
+    --light: #f9f7f3;
+    --paper: #ffffff;
+    --gold: #b8963e;
+    --gold-light: #f5edd8;
+    --teal: #1a6b5c;
+    --teal-light: #e0f0ec;
+    --border: rgba(17,17,24,0.1);
+    --serif: 'Cormorant Garamond', Georgia, serif;
+    --sans: 'DM Sans', system-ui, sans-serif;
+  }
+  *, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
+  html { scroll-behavior: smooth; }
+  body {
+    font-family: var(--sans);
+    background: var(--light);
+    color: var(--ink);
+    font-size: 15px;
+    line-height: 1.7;
+    -webkit-font-smoothing: antialiased;
+  }
+
+  /* NAV */
+  nav {
+    position: fixed; top: 0; left: 0; right: 0; z-index: 100;
+    display: flex; justify-content: space-between; align-items: center;
+    padding: 1.25rem 3rem;
+    background: rgba(249,247,243,0.92);
+    backdrop-filter: blur(12px);
+    border-bottom: 0.5px solid var(--border);
+  }
+  .nav-name { font-family: var(--serif); font-size: 1.1rem; font-weight: 600; letter-spacing: 0.01em; }
+  .nav-links { display: flex; gap: 2rem; }
+  .nav-links a { font-size: 13px; color: var(--muted); text-decoration: none; letter-spacing: 0.03em; transition: color 0.2s; }
+  .nav-links a:hover { color: var(--ink); }
+
+  /* HERO */
+  .hero {
+    min-height: 100vh;
+    display: grid;
+    grid-template-columns: 1fr 1fr;
+    align-items: center;
+    padding: 8rem 3rem 4rem;
+    gap: 4rem;
+    position: relative;
+    overflow: hidden;
+  }
+  .hero::before {
+    content: '';
+    position: absolute;
+    top: -100px; right: -100px;
+    width: 600px; height: 600px;
+    background: radial-gradient(circle, rgba(184,150,62,0.08) 0%, transparent 70%);
+    border-radius: 50%;
+    pointer-events: none;
+  }
+  .hero-left { position: relative; z-index: 1; }
+  .hero-tag {
+    display: inline-block;
+    font-size: 11px; font-weight: 500;
+    letter-spacing: 0.12em; text-transform: uppercase;
+    color: var(--gold);
+    border: 0.5px solid var(--gold);
+    padding: 4px 12px; border-radius: 20px;
+    margin-bottom: 1.5rem;
+  }
+  h1 {
+    font-family: var(--serif);
+    font-size: clamp(3rem, 5vw, 5rem);
+    font-weight: 300;
+    line-height: 1.1;
+    letter-spacing: -0.02em;
+    margin-bottom: 1.25rem;
+  }
+  h1 em { font-style: italic; color: var(--gold); }
+  .hero-desc {
+    font-size: 1rem; color: var(--muted); line-height: 1.8;
+    max-width: 420px; margin-bottom: 2rem;
+  }
+  .hero-links { display: flex; flex-wrap: wrap; gap: 0.75rem; margin-bottom: 2.5rem; }
+  .hero-link {
+    display: inline-flex; align-items: center; gap: 6px;
+    font-size: 13px; text-decoration: none;
+    color: var(--ink); border: 0.5px solid var(--border);
+    padding: 6px 14px; border-radius: 6px;
+    background: var(--paper);
+    transition: all 0.2s;
+  }
+  .hero-link:hover { border-color: var(--ink); background: var(--ink); color: var(--paper); }
+  .hero-link svg { width: 14px; height: 14px; }
+
+  .hero-right {
+    display: flex; flex-direction: column; gap: 1rem;
+    position: relative; z-index: 1;
+  }
+  .now-card {
+    background: var(--paper);
+    border: 0.5px solid var(--border);
+    border-radius: 12px;
+    padding: 1.25rem 1.5rem;
+    position: relative;
+    overflow: hidden;
+    opacity: 0;
+    transform: translateY(20px);
+    animation: fadeUp 0.5s ease forwards;
+  }
+  .now-card::before {
+    content: '';
+    position: absolute; top: 0; left: 0;
+    width: 3px; height: 100%;
+  }
+  .now-card.gold::before { background: var(--gold); }
+  .now-card.teal::before { background: var(--teal); }
+  .now-card.ink::before { background: var(--ink); }
+  .now-card:nth-child(1) { animation-delay: 0.1s; }
+  .now-card:nth-child(2) { animation-delay: 0.2s; }
+  .now-card:nth-child(3) { animation-delay: 0.3s; }
+  .now-card:nth-child(4) { animation-delay: 0.4s; }
+  .now-label {
+    font-size: 10px; font-weight: 500; letter-spacing: 0.1em;
+    text-transform: uppercase; color: var(--muted); margin-bottom: 4px;
+  }
+  .now-title { font-size: 14px; font-weight: 500; color: var(--ink); margin-bottom: 2px; }
+  .now-sub { font-size: 12px; color: var(--muted); }
+  .pulse {
+    display: inline-block; width: 7px; height: 7px;
+    border-radius: 50%; background: var(--teal);
+    margin-right: 6px; vertical-align: middle;
+    animation: pulse 2s ease-in-out infinite;
+  }
+  @keyframes pulse { 0%,100%{opacity:1;transform:scale(1)} 50%{opacity:0.5;transform:scale(0.8)} }
+  @keyframes fadeUp { to { opacity:1; transform:translateY(0); } }
+
+  /* SECTIONS */
+  section { padding: 5rem 3rem; }
+  section:nth-child(even) { background: var(--paper); }
+  .section-header { display: flex; align-items: baseline; gap: 1.5rem; margin-bottom: 3rem; }
+  .section-num { font-family: var(--serif); font-size: 0.9rem; color: var(--gold); font-style: italic; min-width: 2rem; }
+  h2 { font-family: var(--serif); font-size: clamp(1.8rem, 3vw, 2.5rem); font-weight: 300; letter-spacing: -0.01em; }
+  .section-line { flex: 1; height: 0.5px; background: var(--border); margin-bottom: 4px; }
+
+  /* EXPERIENCE */
+  .exp-grid { display: grid; gap: 0; }
+  .exp-item {
+    display: grid; grid-template-columns: 200px 1fr;
+    gap: 2rem; padding: 2.5rem 0;
+    border-bottom: 0.5px solid var(--border);
+  }
+  .exp-item:last-child { border-bottom: none; }
+  .exp-meta {}
+  .exp-company { font-size: 13px; font-weight: 500; color: var(--ink); }
+  .exp-period { font-size: 12px; color: var(--muted); margin-top: 2px; }
+  .exp-location { font-size: 11px; color: var(--muted); margin-top: 2px; }
+  .exp-content {}
+  .exp-role { font-family: var(--serif); font-size: 1.3rem; font-weight: 400; margin-bottom: 0.75rem; }
+  .exp-tags { display: flex; flex-wrap: wrap; gap: 6px; margin-bottom: 0.875rem; }
+  .tag {
+    font-size: 11px; padding: 3px 9px; border-radius: 20px;
+    border: 0.5px solid var(--border); color: var(--muted);
+    background: var(--light);
+  }
+  .tag.gold { background: var(--gold-light); color: #7a5c1a; border-color: rgba(184,150,62,0.3); }
+  .tag.teal { background: var(--teal-light); color: var(--teal); border-color: rgba(26,107,92,0.25); }
+  .exp-bullets { list-style: none; }
+  .exp-bullets li { font-size: 14px; color: var(--muted); line-height: 1.7; padding: 3px 0; padding-left: 1rem; position: relative; }
+  .exp-bullets li::before { content: '—'; position: absolute; left: 0; color: var(--gold); font-size: 12px; top: 5px; }
+
+  /* CURRENTLY / TRACKS */
+  .tracks-grid { display: grid; grid-template-columns: repeat(auto-fit, minmax(260px, 1fr)); gap: 1.5rem; }
+  .track-card {
+    background: var(--light);
+    border: 0.5px solid var(--border);
+    border-radius: 12px; padding: 1.5rem;
+    position: relative;
+  }
+  .track-icon { font-size: 1.5rem; margin-bottom: 0.75rem; }
+  .track-title { font-family: var(--serif); font-size: 1.1rem; font-weight: 400; margin-bottom: 0.25rem; }
+  .track-desc { font-size: 13px; color: var(--muted); line-height: 1.6; margin-bottom: 1rem; }
+  .track-status {
+    display: inline-block; font-size: 11px; font-weight: 500;
+    padding: 3px 10px; border-radius: 20px; letter-spacing: 0.04em;
+  }
+  .status-active { background: var(--teal-light); color: var(--teal); }
+  .status-upcoming { background: var(--gold-light); color: #7a5c1a; }
+  .status-building { background: #e8e8f0; color: #444; }
+
+  /* ACHIEVEMENTS */
+  .awards-grid { display: grid; grid-template-columns: repeat(auto-fit, minmax(280px, 1fr)); gap: 1rem; }
+  .award-card {
+    border: 0.5px solid var(--border);
+    border-radius: 10px; padding: 1.25rem 1.5rem;
+    background: var(--paper);
+    display: flex; align-items: flex-start; gap: 1rem;
+  }
+  .award-year { font-family: var(--serif); font-size: 1.4rem; font-style: italic; color: var(--gold); min-width: 48px; line-height: 1.2; }
+  .award-name { font-size: 13px; font-weight: 500; color: var(--ink); margin-bottom: 3px; }
+  .award-org { font-size: 12px; color: var(--muted); }
+
+  /* SKILLS */
+  .skills-container { display: grid; grid-template-columns: 1fr 1fr; gap: 3rem; }
+  .skill-group-label { font-size: 11px; font-weight: 500; letter-spacing: 0.1em; text-transform: uppercase; color: var(--gold); margin-bottom: 1rem; }
+  .skill-pills { display: flex; flex-wrap: wrap; gap: 8px; }
+  .skill-pill {
+    font-size: 13px; padding: 5px 14px; border-radius: 6px;
+    border: 0.5px solid var(--border); color: var(--ink);
+    background: var(--paper);
+  }
+  .skill-pill.featured {
+    background: var(--ink); color: var(--paper); border-color: var(--ink);
+  }
+  .skill-pill.new { background: var(--gold-light); color: #7a5c1a; border-color: rgba(184,150,62,0.4); }
+
+  /* EDUCATION */
+  .edu-row { display: flex; justify-content: space-between; align-items: flex-start; padding: 1.5rem 0; border-bottom: 0.5px solid var(--border); }
+  .edu-row:last-child { border-bottom: none; }
+  .edu-inst { font-size: 14px; font-weight: 500; }
+  .edu-deg { font-family: var(--serif); font-size: 1.05rem; color: var(--muted); margin-top: 2px; }
+  .edu-mods { font-size: 12px; color: var(--muted); margin-top: 6px; max-width: 500px; }
+  .edu-year { font-size: 13px; color: var(--muted); text-align: right; white-space: nowrap; }
+
+  /* CONTACT / FOOTER */
+  .footer {
+    background: var(--ink); color: var(--paper);
+    padding: 4rem 3rem;
+    display: grid; grid-template-columns: 1fr 1fr; gap: 3rem; align-items: end;
+  }
+  .footer-headline { font-family: var(--serif); font-size: clamp(2rem, 4vw, 3.5rem); font-weight: 300; line-height: 1.2; margin-bottom: 1.5rem; }
+  .footer-headline em { font-style: italic; color: var(--gold); }
+  .footer-links { display: flex; flex-wrap: wrap; gap: 0.75rem; }
+  .footer-link {
+    font-size: 13px; text-decoration: none; color: rgba(255,255,255,0.7);
+    border: 0.5px solid rgba(255,255,255,0.2);
+    padding: 7px 16px; border-radius: 6px;
+    transition: all 0.2s;
+  }
+  .footer-link:hover { background: rgba(255,255,255,0.1); color: var(--paper); }
+  .footer-right { text-align: right; }
+  .footer-tagline { font-size: 12px; color: rgba(255,255,255,0.4); margin-bottom: 0.5rem; }
+  .footer-name { font-family: var(--serif); font-size: 1.3rem; font-style: italic; color: rgba(255,255,255,0.8); }
+
+  /* RESPONSIVE */
+  @media (max-width: 768px) {
+    nav { padding: 1rem 1.25rem; }
+    .nav-links { display: none; }
+    .hero { grid-template-columns: 1fr; padding: 6rem 1.25rem 3rem; gap: 2.5rem; }
+    .hero::before { display: none; }
+    section { padding: 3.5rem 1.25rem; }
+    .exp-item { grid-template-columns: 1fr; gap: 0.75rem; }
+    .skills-container { grid-template-columns: 1fr; gap: 2rem; }
+    .footer { grid-template-columns: 1fr; }
+    .footer-right { text-align: left; }
+  }
+</style>
+</head>
+<body>
+
+<nav>
+  <span class="nav-name">Manshi Bijalwan</span>
+  <div class="nav-links">
+    <a href="#currently">Currently</a>
+    <a href="#experience">Experience</a>
+    <a href="#recognition">Recognition</a>
+    <a href="#skills">Skills</a>
+    <a href="#contact">Contact</a>
+  </div>
+</nav>
+
+<!-- HERO -->
+<section class="hero">
+  <div class="hero-left">
+    <span class="hero-tag">Engineer · Consultant · Builder</span>
+    <h1>Manshi<br><em>Bijalwan</em></h1>
+    <p class="hero-desc">
+      MEngSc candidate at University College Dublin. Former Technology Consultant at PwC India.
+      I build things that work — from SAP enterprise rollouts to Flutter mobile apps.
+      Passionate about consulting, healthcare technology, and making complex systems simple.
+    </p>
+    <div class="hero-links">
+      <a href="mailto:manshi.bijalwan@ucdconnect.ie" class="hero-link">
+        <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M4 4h16c1.1 0 2 .9 2 2v12c0 1.1-.9 2-2 2H4c-1.1 0-2-.9-2-2V6c0-1.1.9-2 2-2z"/><polyline points="22,6 12,12 2,6"/></svg>
+        Email
+      </a>
+      <a href="https://www.linkedin.com/in/manshi-bijalwan/" target="_blank" class="hero-link">
+        <svg viewBox="0 0 24 24" fill="currentColor"><path d="M16 8a6 6 0 0 1 6 6v7h-4v-7a2 2 0 0 0-2-2 2 2 0 0 0-2 2v7h-4v-7a6 6 0 0 1 6-6z"/><rect x="2" y="9" width="4" height="12"/><circle cx="4" cy="4" r="2"/></svg>
+        LinkedIn
+      </a>
+      <a href="https://github.com/ManshiBijalwan" target="_blank" class="hero-link">
+        <svg viewBox="0 0 24 24" fill="currentColor"><path d="M9 19c-5 1.5-5-2.5-7-3m14 6v-3.87a3.37 3.37 0 0 0-.94-2.61c3.14-.35 6.44-1.54 6.44-7A5.44 5.44 0 0 0 20 4.77 5.07 5.07 0 0 0 19.91 1S18.73.65 16 2.48a13.38 13.38 0 0 0-7 0C6.27.65 5.09 1 5.09 1A5.07 5.07 0 0 0 5 4.77a5.44 5.44 0 0 0-1.5 3.78c0 5.42 3.3 6.61 6.44 7A3.37 3.37 0 0 0 9 18.13V22"/></svg>
+        GitHub
+      </a>
+      <a href="+353899711662" class="hero-link">
+        <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M22 16.92v3a2 2 0 0 1-2.18 2 19.79 19.79 0 0 1-8.63-3.07A19.5 19.5 0 0 1 4.69 13.1 19.79 19.79 0 0 1 1.61 4.48 2 2 0 0 1 3.6 2.26h3a2 2 0 0 1 2 1.72 12.84 12.84 0 0 0 .7 2.81 2 2 0 0 1-.45 2.11L7.91 9.91a16 16 0 0 0 6 6l1.27-1.27a2 2 0 0 1 2.11-.45 12.84 12.84 0 0 0 2.81.7A2 2 0 0 1 22 16.92z"/></svg>
+        +353 899 711 662
+      </a>
+    </div>
+  </div>
+
+  <div class="hero-right">
+    <div class="now-card teal">
+      <div class="now-label"><span class="pulse"></span>Active now</div>
+      <div class="now-title">Mobile Dev Internship — EU Vine Care Project</div>
+      <div class="now-sub">Flutter · Dart · Python · UCD Research · Jun–Sept 2026</div>
+    </div>
+    <div class="now-card gold">
+      <div class="now-label">Applying</div>
+      <div class="now-title">McKinsey & Company — Business Analyst</div>
+      <div class="now-sub">Application window opens July 2026</div>
+    </div>
+    <div class="now-card gold">
+      <div class="now-label">Certifying</div>
+      <div class="now-title">Lean Six Sigma Yellow Belt</div>
+      <div class="now-sub">White Belt complete · Pharma process excellence track</div>
+    </div>
+    <div class="now-card ink">
+      <div class="now-label">Academic</div>
+      <div class="now-title">MEngSc Final Project — 30 Credits</div>
+      <div class="now-sub">Electronics &amp; Computer Engineering · UCD · 2025–Present</div>
+    </div>
+  </div>
+</section>
+
+<!-- CURRENTLY -->
+<section id="currently">
+  <div class="section-header">
+    <span class="section-num">01</span>
+    <h2>What I'm building</h2>
+    <div class="section-line"></div>
+  </div>
+  <div class="tracks-grid">
+    <div class="track-card">
+      <div class="track-icon">📱</div>
+      <div class="track-title">Mobile development</div>
+      <div class="track-desc">Building a full-stack AI-powered vineyard monitoring app for an EU-funded project at UCD. Production Flutter/Dart frontend with Python ML backend, targeting real agricultural users.</div>
+      <span class="track-status status-active">Active · Jun–Sept 2026</span>
+    </div>
+    <div class="track-card">
+      <div class="track-icon">🎯</div>
+      <div class="track-title">Consulting applications</div>
+      <div class="track-desc">Targeting MBB consulting roles — McKinsey, BCG, Bain — with applications opening July 2026. McKinsey Forward Program Scholar and Next Gen Women Leaders APAC alumna.</div>
+      <span class="track-status status-upcoming">Window opens July 2026</span>
+    </div>
+    <div class="track-card">
+      <div class="track-icon">🧪</div>
+      <div class="track-title">Lean Six Sigma · Pharma track</div>
+      <div class="track-desc">White Belt certified. Progressing through Yellow Belt with a focus on pharmaceutical process optimisation. Building case studies in healthcare operations and clinical supply chains.</div>
+      <span class="track-status status-building">Yellow Belt in progress</span>
+    </div>
+    <div class="track-card">
+      <div class="track-icon">📚</div>
+      <div class="track-title">MEngSc research project</div>
+      <div class="track-desc">30-credit thesis project in Electronics & Computer Engineering at UCD. Combining my background in AI/ML and enterprise systems for applied research with real-world impact.</div>
+      <span class="track-status status-active">Ongoing · 2025–2026</span>
+    </div>
+    <div class="track-card">
+      <div class="track-icon">💊</div>
+      <div class="track-title">Healthcare & pharma consulting</div>
+      <div class="track-desc">Exploring life sciences consulting through ZS Associates, IQVIA, and McKinsey's Healthcare practice. Combining AI/data skills with enterprise operations knowledge.</div>
+      <span class="track-status status-building">Researching &amp; networking</span>
+    </div>
+    <div class="track-card">
+      <div class="track-icon">⚡</div>
+      <div class="track-title">AI &amp; deep learning projects</div>
+      <div class="track-desc">ImaGen: a Pix2Pix U-Net GAN pipeline for image reconstruction. Actively building out a project portfolio across computer vision and agricultural AI.</div>
+      <span class="track-status status-active">Portfolio expanding</span>
+    </div>
+  </div>
+</section>
+
+<!-- EXPERIENCE -->
+<section id="experience">
+  <div class="section-header">
+    <span class="section-num">02</span>
+    <h2>Experience</h2>
+    <div class="section-line"></div>
+  </div>
+  <div class="exp-grid">
+
+    <div class="exp-item">
+      <div class="exp-meta">
+        <div class="exp-company">UCD — EU Vine Care</div>
+        <div class="exp-period">Jun 2026 – Sept 2026</div>
+        <div class="exp-location">Dublin, Ireland</div>
+      </div>
+      <div class="exp-content">
+        <div class="exp-role">Research Assistant — Mobile & AI</div>
+        <div class="exp-tags">
+          <span class="tag teal">Flutter</span><span class="tag teal">Dart</span><span class="tag teal">Python</span><span class="tag">EU Funded</span><span class="tag">AgriTech</span>
+        </div>
+        <ul class="exp-bullets">
+          <li>Architecting and building a full-stack mobile and web application for AI-powered vineyard monitoring</li>
+          <li>Developing production-ready agricultural technology using Flutter, Dart, and Python ML frameworks</li>
+          <li>Delivering in a complex, autonomous research environment with real end-user requirements</li>
+        </ul>
+      </div>
+    </div>
+
+    <div class="exp-item">
+      <div class="exp-meta">
+        <div class="exp-company">PwC India</div>
+        <div class="exp-period">Aug 2023 – Aug 2025</div>
+        <div class="exp-location">Gurgaon, India</div>
+      </div>
+      <div class="exp-content">
+        <div class="exp-role">Associate Technology Consultant</div>
+        <div class="exp-tags">
+          <span class="tag gold">SAP S/4HANA</span><span class="tag gold">Ariba</span><span class="tag">Enterprise Consulting</span><span class="tag">Client-facing</span>
+        </div>
+        <ul class="exp-bullets">
+          <li>Implemented SAP S/4HANA and Ariba Procurement solutions across 5 major clients, delivering 35% workflow efficiency gains</li>
+          <li>Led 50+ client meetings, post-implementation support cycles, and hyper-care phases across complex enterprise rollouts</li>
+          <li>Mentored 10+ junior associates and collaborated across time zones using Agile delivery methods</li>
+          <li>Managed ambiguous, fast-changing requirements with independent prioritisation and structured stakeholder communication</li>
+        </ul>
+      </div>
+    </div>
+
+    <div class="exp-item">
+      <div class="exp-meta">
+        <div class="exp-company">Costa Cloud — Appolo Computers</div>
+        <div class="exp-period">Jan 2023 – Jun 2023</div>
+        <div class="exp-location">India</div>
+      </div>
+      <div class="exp-content">
+        <div class="exp-role">AI / ML Trainee</div>
+        <div class="exp-tags">
+          <span class="tag">Python</span><span class="tag">Computer Vision</span><span class="tag">Data Pipelines</span>
+        </div>
+        <ul class="exp-bullets">
+          <li>Built autonomous systems with distributed sensors, compute components, and end-to-end data pipelines</li>
+          <li>Improved model accuracy and system performance by 40% through Python-based automation and analysis</li>
+          <li>Produced structured technical documentation to guide engineering decisions in an R&D environment</li>
+        </ul>
+      </div>
+    </div>
+
+  </div>
+</section>
+
+<!-- PROJECTS -->
+<section>
+  <div class="section-header">
+    <span class="section-num">03</span>
+    <h2>Projects</h2>
+    <div class="section-line"></div>
+  </div>
+  <div class="exp-grid">
+    <div class="exp-item">
+      <div class="exp-meta">
+        <div class="exp-company">ImaGen</div>
+        <div class="exp-period">Sep 2024 – Nov 2024</div>
+      </div>
+      <div class="exp-content">
+        <div class="exp-role">Deep Learning Image Reconstruction</div>
+        <div class="exp-tags">
+          <span class="tag">Pix2Pix U-Net</span><span class="tag">GANs</span><span class="tag">Python</span><span class="tag">Computer Vision</span>
+        </div>
+        <ul class="exp-bullets">
+          <li>Designed and implemented a Pix2Pix U-Net GAN pipeline for automated image enhancement and reconstruction</li>
+          <li>Applied rigorous modular code design, evaluation metrics, and performance optimisation across training cycles</li>
+          <li>Demonstrated end-to-end ML engineering: data preprocessing, model architecture, training, evaluation, and documentation</li>
+        </ul>
+      </div>
+    </div>
+    <div class="exp-item">
+      <div class="exp-meta">
+        <div class="exp-company">Vine Care App</div>
+        <div class="exp-period">Jun 2026 – Present</div>
+        <div class="exp-location">EU Funded</div>
+      </div>
+      <div class="exp-content">
+        <div class="exp-role">Full-stack AgriTech Mobile Application</div>
+        <div class="exp-tags">
+          <span class="tag teal">Flutter</span><span class="tag teal">Dart</span><span class="tag">Python</span><span class="tag">AI/ML</span>
+        </div>
+        <ul class="exp-bullets">
+          <li>Production mobile + web app for real-time vineyard health monitoring powered by AI analysis</li>
+          <li>End-to-end ownership: architecture, UI/UX, backend integration, and deployment pipeline</li>
+        </ul>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- RECOGNITION -->
+<section id="recognition" style="background: var(--paper);">
+  <div class="section-header">
+    <span class="section-num">04</span>
+    <h2>Recognition</h2>
+    <div class="section-line"></div>
+  </div>
+  <div class="awards-grid">
+    <div class="award-card">
+      <div class="award-year">'26</div>
+      <div>
+        <div class="award-name">McKinsey Forward Program Scholar</div>
+        <div class="award-org">McKinsey & Company · Early bird mentee</div>
+      </div>
+    </div>
+    <div class="award-card">
+      <div class="award-year">'26</div>
+      <div>
+        <div class="award-name">UCD Advantage Award</div>
+        <div class="award-org">University College Dublin · Volunteering & personal development</div>
+      </div>
+    </div>
+    <div class="award-card">
+      <div class="award-year">'24</div>
+      <div>
+        <div class="award-name">Grace Hopper Celebration Scholar</div>
+        <div class="award-org">AnitaB.org · Leadership & innovation in technology</div>
+      </div>
+    </div>
+    <div class="award-card">
+      <div class="award-year">'24</div>
+      <div>
+        <div class="award-name">McKinsey Next Generation Women Leaders APAC</div>
+        <div class="award-org">McKinsey & Company · Strategic thinking & collaborative leadership</div>
+      </div>
+    </div>
+    <div class="award-card">
+      <div class="award-year">'22</div>
+      <div>
+        <div class="award-name">Goldman Sachs Summer Insight Series</div>
+        <div class="award-org">Goldman Sachs · Engineering division · 8-week programme</div>
+      </div>
+    </div>
+    <div class="award-card">
+      <div class="award-year">'22</div>
+      <div>
+        <div class="award-name">Linux Scholar — Dahn Kohn Scholarship</div>
+        <div class="award-org">Merit-based scholarship · Open source & systems</div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- SKILLS -->
+<section id="skills">
+  <div class="section-header">
+    <span class="section-num">05</span>
+    <h2>Skills</h2>
+    <div class="section-line"></div>
+  </div>
+  <div class="skills-container">
+    <div>
+      <div class="skill-group-label">Consulting & enterprise</div>
+      <div class="skill-pills">
+        <span class="skill-pill featured">SAP S/4HANA</span>
+        <span class="skill-pill featured">Ariba Procurement</span>
+        <span class="skill-pill">Client engagement</span>
+        <span class="skill-pill">Stakeholder management</span>
+        <span class="skill-pill">PowerPoint decks</span>
+        <span class="skill-pill">Excel modelling</span>
+        <span class="skill-pill">Agile / Scrum</span>
+        <span class="skill-pill new">Lean Six Sigma White Belt</span>
+      </div>
+    </div>
+    <div>
+      <div class="skill-group-label">Engineering & AI</div>
+      <div class="skill-pills">
+        <span class="skill-pill featured">Python</span>
+        <span class="skill-pill featured">Flutter / Dart</span>
+        <span class="skill-pill">Deep learning · GANs</span>
+        <span class="skill-pill">Computer vision</span>
+        <span class="skill-pill">SQL</span>
+        <span class="skill-pill">Git / GitHub</span>
+        <span class="skill-pill">AWS fundamentals</span>
+        <span class="skill-pill">CI/CD</span>
+      </div>
+    </div>
+    <div>
+      <div class="skill-group-label">Languages</div>
+      <div class="skill-pills">
+        <span class="skill-pill featured">English (fluent)</span>
+        <span class="skill-pill featured">Hindi (fluent)</span>
+      </div>
+    </div>
+    <div>
+      <div class="skill-group-label">Interests & pursuits</div>
+      <div class="skill-pills">
+        <span class="skill-pill">Healthcare consulting</span>
+        <span class="skill-pill">Pharma process excellence</span>
+        <span class="skill-pill">AgriTech / mobile apps</span>
+        <span class="skill-pill">Trekking</span>
+        <span class="skill-pill">Swimming</span>
+        <span class="skill-pill">Graphology</span>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- EDUCATION -->
+<section style="background: var(--paper);">
+  <div class="section-header">
+    <span class="section-num">06</span>
+    <h2>Education</h2>
+    <div class="section-line"></div>
+  </div>
+  <div class="edu-row">
+    <div>
+      <div class="edu-inst">University College Dublin, Ireland</div>
+      <div class="edu-deg">MEngSc — Electronics & Computer Engineering</div>
+      <div class="edu-mods">Cybersecurity · Software Engineering · Information Visualisation · Ethical Hacking · SQL · Data Science with Python</div>
+    </div>
+    <div class="edu-year">Sept 2025 – Present<br><span style="font-size:11px; color:var(--gold);">Work Visa Secured</span></div>
+  </div>
+  <div class="edu-row">
+    <div>
+      <div class="edu-inst">Banasthali Vidyapith, India</div>
+      <div class="edu-deg">B.Tech — Electronics & Communication Engineering</div>
+      <div class="edu-mods">OOP · Control Systems · Communication Networks · Entrepreneurship · Cloud · First Class Honours</div>
+    </div>
+    <div class="edu-year">July 2019 – July 2023</div>
+  </div>
+</section>
+
+<!-- CONTACT -->
+<footer id="contact" class="footer">
+  <div>
+    <div class="footer-headline">Let's build something<br><em>worth talking about.</em></div>
+    <div class="footer-links">
+      <a href="mailto:manshi.bijalwan@ucdconnect.ie" class="footer-link">manshi.bijalwan@ucdconnect.ie</a>
+      <a href="tel:+353899711662" class="footer-link">+353 899 711 662</a>
+      <a href="https://www.linkedin.com/in/manshi-bijalwan/" target="_blank" class="footer-link">LinkedIn</a>
+      <a href="https://github.com/ManshiBijalwan" target="_blank" class="footer-link">GitHub</a>
+    </div>
+  </div>
+  <div class="footer-right">
+    <div class="footer-tagline">Dublin, Ireland · Open to opportunities worldwide</div>
+    <div class="footer-name">Manshi Bijalwan</div>
+  </div>
+</footer>
+
+</body>
+</html>
