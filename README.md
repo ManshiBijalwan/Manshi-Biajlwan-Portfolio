@@ -9,7 +9,6 @@
 | What | Where | Status |
 |------|--------|--------|
 | 📱 Mobile Dev Internship — EU Vine Care Project | UCD Research, Dublin | `Jun–Sept 2026` |
-| 🎯 McKinsey Business Analyst applications | MBB consulting cycle | `Window opens July 2026` |
 | 🧪 Lean Six Sigma Yellow Belt | Pharma process track | `In progress` |
 | 📚 MEngSc Final Project (30 credits) | UCD Electronics & CS | `2025–2026` |
 
